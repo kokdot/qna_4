@@ -11,12 +11,12 @@ class AnswersController < ApplicationController
 		if @answer.save
 			redirect_to @question, notice: 'Your answer successfully created.'
 		else
-			redirect_to @question, notice: "Answer can't be blank."
+			render 'questions/show'
 		end
   end
   
   def destroy
-    if @answer.user == current_user
+    if User.author_of?(current_user, @answer)
       @answer.destroy
       redirect_to @question, notice: 'Your answer successfully destroyed.'
     else
