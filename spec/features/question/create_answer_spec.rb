@@ -4,11 +4,11 @@ feature 'User can create answer', %q{
   In order to get answer for a community
   As an authenticated user 
   Id like to able to write an answer
-} do 
+} do
+
   context 'authenticated user' do
     given(:user){ create(:user) }
     given!(:question){ create(:question, user: user) }
-
 
     background do 
       sign_in(user)

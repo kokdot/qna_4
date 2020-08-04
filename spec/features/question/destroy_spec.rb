@@ -40,7 +40,7 @@ feature 'User can destroy your answer and question', %q{
     expect(page).to have_content 'Your can destroy only your question.'
   end
   
-	scenario 'destroy your  answer' do
+  scenario 'destroy your  answer' do
     click_on "#{question.title}"
     within("p#id#{answer.id}") do
       click_on 'Destroy'
@@ -61,6 +61,5 @@ feature 'User can destroy your answer and question', %q{
     end
 
     expect(page).to have_content 'Your can destroy only your answer.'
-  end
-  
+  end  
 end

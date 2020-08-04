@@ -6,17 +6,16 @@ feature 'User can show list of questions', %q{
   Id like to see the list of questions
 } do 
   
-	given!(:questions){ create_list(:question, 5) }
-	describe 'User' do
-		
+  given!(:questions){ create_list(:question, 5) }
+  
+  describe 'User' do
 		scenario 'show the list of questions' do
-			visit questions_path
-			# save_and_open_page
-
-			questions.each do |question|
-				expect(page).to have_content question.title
-				expect(page).to have_content question.body
-			end
-		end
-	end
+		  visit questions_path
+		  questions.each do |question|
+      
+      expect(page).to have_content question.title
+		  expect(page).to have_content question.body
+		  end
+	  end
+  end
 end
