@@ -84,7 +84,7 @@ RSpec.describe QuestionsController, type: :controller do
       end
     end
   end
-  
+
 	describe 'PATCH #update' do 
 	  before { login(user) }    
     context 'with valid attributes' do
@@ -127,16 +127,36 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-	  before { login(user) }    
     let!(:question) { create(:question, user: user) }
+    context 'delete your question' do
+    
+      before { login(user) }
 
-    it 'delete the question' do 
-      expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
+      it 'delete your question' do 
+        expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
+      end
+
+      it 'redirects to index view' do 
+        delete :destroy, params: { id: question } 
+        expect(response).to redirect_to questions_path
+      end
     end
 
-    it 'redirects to index view' do 
-      delete :destroy, params: { id: question } 
-      expect(response).to redirect_to questions_path
+    context 'delete not your question' do
+      let!(:user_1) { create(:user) }
+      
+      before { login(user_1) }
+
+      it 'delete the question' do 
+        expect { delete :destroy, params: { id: question } }.to_not change(Question, :count)
+      end
+
+      it 'redirects to index view' do 
+        delete :destroy, params: { id: question } 
+        expect(response).to redirect_to question
+      end
     end
+
+
   end
 end
