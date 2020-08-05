@@ -17,10 +17,33 @@ feature 'User can destroy your answer', %q{
   
   scenario 'destroy your  answer' do
     click_on "#{question.title}"
-    within("p#id#{answer.id}") do
+    
+    within("div#id#{answer.id}") do
       click_on 'Destroy'
     end
 
     expect(page).to have_content 'Your answer successfully destroyed.'
+  end
+
+  scenario 'destroy not your  answer' do
+    click_on 'Sign out'
+    user_1 = create(:user)
+    sign_in(user_1)
+    visit questions_path
+    click_on "#{question.title}"
+
+    within("div#id#{answer.id}") do
+      expect(page).to_not have_link 'Destroy'
+    end
+  end
+
+  scenario 'destroy answer not loged in user' do
+    click_on 'Sign out'
+    visit questions_path
+    click_on "#{question.title}"
+
+    within("div#id#{answer.id}") do
+      expect(page).to_not have_link 'Destroy'
+    end
   end
 end

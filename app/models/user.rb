@@ -7,6 +7,6 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   def author_of?(answer)
-    answer.user.id == self.id ? true : false
+    answer.user_id == self.id
   end
 end

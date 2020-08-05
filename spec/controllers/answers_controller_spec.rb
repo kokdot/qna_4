@@ -43,7 +43,7 @@ RSpec.describe AnswersController, type: :controller do
       before { login(user) } 
       
       it 'delete the answer' do
-        expect { delete :destoy, params: { id: answer } }.to change(question.answers, :count).by(-1)
+        expect { delete :destoy, params: { id: answer } }.to change(Answers, :count).by(-1)
       end
       it 'redirect to show' do
         delete :destoy, params: { id: answer }
