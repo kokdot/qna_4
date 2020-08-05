@@ -21,19 +21,6 @@ feature 'User can destroy your question', %q{
     end
     
     expect(page).to have_content 'Your question successfully destroyed.'
-    expect(page).to_not have_content "#{question.title}"
-  end
-  
-  scenario 'destroy not your question' do
-    click_on 'Sign out'
-    user_1 = create(:user)
-    sign_in(user_1)
-    visit questions_path
-    click_on "#{question.title}"
-    within("p#id#{question.id}") do
-      click_on 'Destroy'
-    end
-    
-    expect(page).to have_content 'Your can destroy only your question.'
+    expect(page).to_not have_content question.title
   end
 end

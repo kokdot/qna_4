@@ -7,7 +7,7 @@ class QuestionsController < ApplicationController
   end
 
   def show
-		@answer = Answer.new(question_id: @question)
+		@answer = @question.answers.new
   end
 
   def new
@@ -38,7 +38,7 @@ class QuestionsController < ApplicationController
   
 
   def destroy
-    if @question.user == current_user
+    if current_user.author_of?(@question)
       @question.destroy
       redirect_to questions_path, notice: 'Your question successfully destroyed.'
     else
@@ -53,7 +53,7 @@ class QuestionsController < ApplicationController
   end
 
   def question_params
-    params.require(:question).permit(:title, :body, :user_id)
+    params.require(:question).permit(:title, :body)
   end
 
 end

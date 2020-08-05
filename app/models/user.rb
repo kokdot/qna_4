@@ -6,7 +6,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  def self.author_of?(user, answer)
-    answer.user.id == user.id ? true : false
+  def author_of?(answer)
+    answer.user.id == self.id ? true : false
   end
 end

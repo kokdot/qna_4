@@ -23,17 +23,4 @@ feature 'User can destroy your answer', %q{
 
     expect(page).to have_content 'Your answer successfully destroyed.'
   end
-
-  scenario 'destroy not your  answer' do
-    click_on 'Sign out'
-    user_1 = create(:user)
-    sign_in(user_1)
-    visit questions_path
-    click_on "#{question.title}"
-    within("p#id#{answer.id}") do
-      click_on 'Destroy'
-    end
-
-    expect(page).to have_content 'Your can destroy only your answer.'
-  end  
 end

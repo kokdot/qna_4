@@ -12,9 +12,6 @@ feature 'User can create answer', %q{
 
     background do 
       sign_in(user)
-    end
-
-    background do 
       visit questions_path
       click_on "#{question.title}"
     end

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
-  let(:user) {create(:user) }
+  let(:user) { create(:user) }
   let(:question) { create(:question, user:user) }
   
   describe 'GET #index' do
@@ -62,6 +62,11 @@ RSpec.describe QuestionsController, type: :controller do
         expect { post :create, params: { question: attributes_for(:question) } }.to change(Question, :count).by(1)
       end
 
+      it 'control author of question' do
+        post :create, params: { question: attributes_for(:question) }
+        expect(assigns(:question).user).to eq user
+      end
+
       it 'redirect to show view' do
         post :create, params: { question: attributes_for(:question) }
         expect(response).to redirect_to assigns(:question)
@@ -79,6 +84,7 @@ RSpec.describe QuestionsController, type: :controller do
       end
     end
   end
+  
 	describe 'PATCH #update' do 
 	  before { login(user) }    
     context 'with valid attributes' do
